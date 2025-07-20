@@ -12,24 +12,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-# Variables
-variable "aws_region" {
-  description = "Región de AWS"
-  type        = string
-  default     = "us-east-1"
-}
-
-variable "project_name" {
-  description = "Nombre del proyecto"
-  type        = string
-  default     = "capital-return-app"
-}
-
-variable "environment" {
-  description = "Ambiente de despliegue"
-  type        = string
-  default     = "dev"
-}
+# Variables moved to variables.tf
 
 # S3 Bucket para almacenamiento
 resource "aws_s3_bucket" "app_bucket" {
@@ -209,19 +192,4 @@ resource "aws_lambda_permission" "api_gateway" {
   source_arn    = "${aws_api_gateway_rest_api.app_api.execution_arn}/*/*"
 }
 
-# Outputs
-output "api_gateway_url" {
-  value = "${aws_api_gateway_rest_api.app_api.execution_arn}${var.environment}"
-}
-
-output "dynamodb_table_name" {
-  value = aws_dynamodb_table.app_table.name
-}
-
-output "s3_bucket_name" {
-  value = aws_s3_bucket.app_bucket.bucket
-}
-
-output "lambda_function_name" {
-  value = aws_lambda_function.app_function.function_name
-} 
+# Outputs moved to outputs.tf 
